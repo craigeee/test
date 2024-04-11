@@ -1,0 +1,7 @@
+type: string
+minLength: 5
+maxLength: 16 # 15 + 1 for the '+' symbol
+# Sources:
+# Based on ITU E.164 recommendations
+# https://www.itu.int/ITU-D/treg/Events/Seminars/2010/Ghana10/pdf/Session2.pdf
+pattern: "^\\+?[0-9]{5,15}$"

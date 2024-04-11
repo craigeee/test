@@ -1,0 +1,5 @@
+type: string
+minLength: 1
+maxLength: 125
+# Source: https://github.com/cat-home-experts/gcp-jobs-management-api/blob/main/service/Jobs.Api/Validators/JobRequestValidator.cs
+pattern: "^[\\w\\s,.'`-]+$"

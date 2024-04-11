@@ -1,0 +1,44 @@
+asyncapi: "2.6.0"
+info:
+  title: Consumer App PubSub API
+  version: "1.0.0"
+  license:
+    name: private
+  description: |
+    Description of channels and emitted GCP PubSub events/messages by the Consumer App
+  contact:
+    name: Consumer App Team
+
+tags:
+  - name: Consumer
+    description: Consumer profile
+
+channels:
+  marketplace-consumer:
+    description: This channel publishes updates when a user is created, updated, or deleted.
+    subscribe:
+      description: Receive updates about Consumer entity changes
+      operationId: publishConsumer
+      message:
+        contentType: application/json
+        headers:
+          type: object
+          properties:
+            attributes:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: ["CREATE", "UPDATE", "DELETE"]
+                schemaVersion:
+                  type: string
+                  pattern: "^\\d+\\.\\d+$"
+                timestamp:
+                  type: string
+                  format: "date-time"
+              required: ["action", "schemaVersion", "timestamp"]
+              additionalProperties: false
+        payload:
+          type: object
+          $ref: ./schemas/consumer.yaml#/UserProfile
+          additionalProperties: false

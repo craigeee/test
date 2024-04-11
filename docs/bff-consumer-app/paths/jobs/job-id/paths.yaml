@@ -1,0 +1,25 @@
+get:
+  summary: Get job
+  description: Get job by id
+  operationId: getJob
+  tags: ["Job"]
+
+  parameters:
+    - $ref: "../../../../common/schemas/job.yaml#/parameters/path/jobId"
+
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: "../../../../common/schemas/job.yaml#/Job"
+
+    "400":
+      $ref: ../../../../common/errors/bad-request.yaml
+
+    "401":
+      $ref: ../../../../common/errors/unauthorized.yaml
+
+    "403":
+      $ref: ../../../../common/errors/forbidden.yaml

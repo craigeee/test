@@ -1,0 +1,58 @@
+post:
+  summary: Create job
+  description: Creates a new job
+  operationId: postJob
+  tags: ["Job"]
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../../../common/schemas/job.yaml#/JobData
+
+  responses:
+    "201":
+      description: Successfully created
+      content:
+        application/json:
+          schema:
+            $ref: ../../../common/schemas/job.yaml#/Job
+
+    "400":
+      $ref: ../../../common/errors/bad-request.yaml
+
+    "401":
+      $ref: ../../../common/errors/unauthorized.yaml
+
+    "403":
+      $ref: ../../../common/errors/forbidden.yaml
+
+get:
+  summary: Get jobs
+  description: Get paginated consumer jobs
+  operationId: getJobs
+  tags: ["Job"]
+
+  parameters:
+    - in: query
+      name: page
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        description: Which page to return
+
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: "../../../common/schemas/job.yaml#/JobsPaginated"
+
+    "400":
+      $ref: ../../../common/errors/bad-request.yaml
+
+    "401":
+      $ref: ../../../common/errors/unauthorized.yaml

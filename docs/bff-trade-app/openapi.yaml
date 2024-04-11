@@ -1,0 +1,50 @@
+openapi: "3.1.0"
+
+info:
+  title: Trade App API
+  description: |
+    BFF (Backend for Frontend) API for the Trade App.
+
+    This API follows [CAPI API standard](https://checkatrade.atlassian.net/wiki/spaces/CAPI/pages/3589669089/Checkatrade+API+CAPI+Standard+V1.0.0).
+  contact:
+    name: Trade App Team
+  version: "1.0"
+
+servers:
+  - url: https://api.staging.checkatrade.com/v1/trade-app
+    description: Staging
+  - url: https://api.checkatrade.com/v1/trade-app
+    description: Production
+
+tags:
+  - name: Chat
+    description: Provides a client app with an API key and an access token for the current chat provider API
+  - name: Job
+    description: Job management
+  - name: Health
+    description:
+      Health probes based on https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/.
+      These endpoints are only available inside Kubernetes cluster are are not accessible publicly.
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+paths:
+  /jobs/{jobId}/accept:
+    $ref: ./paths/jobs/accept/paths.yaml
+  /jobs/{jobId}/reject:
+    $ref: ./paths/jobs/reject/paths.yaml
+  /health/liveness:
+    $ref: ../common/health/liveness.yaml
+  /health/readiness:
+    $ref: ../common/health/readiness.yaml
+  /health/startup:
+    $ref: ../common/health/startup.yaml
+  /trade/chat/token:
+    $ref: ./paths/chat/token/paths.yaml

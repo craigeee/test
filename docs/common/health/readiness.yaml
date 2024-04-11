@@ -1,0 +1,16 @@
+get:
+  summary: Checks the readiness of the application
+  description: Returns a simple status object indicating if the application is ready to handle requests.
+  operationId: getReadiness
+  tags: ["Health"]
+
+  responses:
+    "200":
+      description: Application is ready to handle requests
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas.yaml#/HealthCheckOk
+
+    "503":
+      $ref: ../errors/service-unavailable.yaml

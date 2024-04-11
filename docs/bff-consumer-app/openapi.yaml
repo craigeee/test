@@ -1,0 +1,54 @@
+openapi: "3.1.0"
+
+info:
+  title: Consumer App API
+  description: |
+    BFF (Backend for Frontend) API for the Consumer App.
+
+    This API follows [CAPI API standard](https://checkatrade.atlassian.net/wiki/spaces/CAPI/pages/3589669089/Checkatrade+API+CAPI+Standard+V1.0.0).
+  contact:
+    name: Consumer App Team
+  version: "1.0"
+
+servers:
+  - url: https://api.staging.checkatrade.com/v1/consumer-app
+    description: Staging
+  - url: https://api.checkatrade.com/v1/consumer-app
+    description: Production
+
+tags:
+  - name: Chat
+    description: Provides a client app with an API key and an access token for the current chat provider API
+  - name: Consumer
+    description: Consumer profile
+  - name: Job
+    description: Job management
+  - name: Health
+    description:
+      Health probes based on https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/.
+      These endpoints are only available inside Kubernetes cluster are are not accessible publicly.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /consumer/chat/token:
+    $ref: ./paths/chat/token/paths.yaml
+  /consumer/profile:
+    $ref: ./paths/consumers/paths.yaml
+  /health/startup:
+    $ref: ../common/health/startup.yaml
+  /health/readiness:
+    $ref: ../common/health/readiness.yaml
+  /health/liveness:
+    $ref: ../common/health/liveness.yaml
+  /jobs/{jobId}:
+    $ref: ./paths/jobs/job-id/paths.yaml
+  /jobs:
+    $ref: ./paths/jobs/paths.yaml
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

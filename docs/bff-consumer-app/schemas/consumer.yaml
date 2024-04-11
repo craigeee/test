@@ -1,0 +1,50 @@
+UserData:
+  type: object
+  properties:
+    firstName:
+      $ref: ../../common/schemas/consumer-name.yaml
+    lastName:
+      $ref: ../../common/schemas/consumer-name.yaml
+    phone:
+      $ref: ../../common/schemas/phone.yaml
+    postcode:
+      $ref: ../../common/schemas/postcode.yaml
+    communicationPreferences:
+      type: array
+      items:
+        $ref: "#/CommunicationPreference"
+
+UserProfile:
+  type: object
+  properties:
+    id:
+      type: string
+      format: uuid
+    email:
+      type: string
+      format: email
+      maxLength: 320
+    allOf:
+      $ref: "#/UserData"
+
+CommunicationPreference:
+  type: object
+  properties:
+    topic:
+      $ref: "#/CommunicationTopic"
+    channel:
+      type: object
+      properties:
+        email:
+          type: boolean
+        push:
+          type: boolean
+      anyOf:
+        - required: [email]
+        - required: [push]
+
+CommunicationTopic:
+  type: string
+  enum:
+    - MARKETING
+    - JOBS

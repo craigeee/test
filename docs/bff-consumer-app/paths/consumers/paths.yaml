@@ -1,0 +1,109 @@
+post:
+  summary: Create consumer
+  description: Creates a new consumer profile
+  operationId: postConsumer
+  tags: ["Consumer"]
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/consumer.yaml#/UserData"
+
+  responses:
+    "201":
+      description: Successfully created
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/consumer.yaml#/UserProfile"
+
+    "400":
+      $ref: ../../../common/errors/bad-request.yaml
+
+    "401":
+      $ref: ../../../common/errors/unauthorized.yaml
+
+    "409":
+      $ref: ../../../common/errors/conflict.yaml
+
+put:
+  summary: Update consumer
+  description: Updates an existing consumer profile
+  operationId: putConsumer
+  tags: ["Consumer"]
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/consumer.yaml#/UserData"
+
+  responses:
+    "200":
+      description: Successfully updated
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/consumer.yaml#/UserProfile"
+
+    "400":
+      $ref: "../../../common/errors/bad-request.yaml"
+
+    "401":
+      $ref: "../../../common/errors/unauthorized.yaml"
+
+    "404":
+      $ref: "../../../common/errors/not-found.yaml"
+
+patch:
+  summary: Update consumer
+  description: Updates an existing consumer profile
+  operationId: patchConsumer
+  tags: ["Consumer"]
+
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/consumer.yaml#/UserData"
+
+  responses:
+    "200":
+      description: Successfully updated
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/consumer.yaml#/UserProfile"
+
+    "401":
+      $ref: "../../../common/errors/unauthorized.yaml"
+
+    "404":
+      $ref: "../../../common/errors/not-found.yaml"
+
+get:
+  summary: Get consumer
+  description: |
+    Fetches existing consumer profile.
+
+    If consumer does not exist in ConsumerApp database, but does exist in the legacy Firestore database, 
+    it will be migrated and returned.
+  operationId: getConsumer
+  tags: ["Consumer"]
+
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/consumer.yaml#/UserProfile"
+    "401":
+      $ref: "../../../common/errors/unauthorized.yaml"
+
+    "404":
+      $ref: "../../../common/errors/not-found.yaml"

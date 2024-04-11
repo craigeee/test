@@ -1,0 +1,24 @@
+post:
+  summary: Reject
+  description: Trade is not interested in the job. Changes job status to REQUEST_REJECTED and locks the Stream channel.
+  operationId: postRejectJob
+  tags: ["Job"]
+  parameters:
+    - $ref: "../../../../common/schemas/job.yaml#/parameters/path/jobId"
+
+  responses:
+    "200":
+      description: Successfully rejected
+      content:
+        application/json:
+          schema:
+            $ref: "../../../common/schemas/job.yaml#/JobData"
+
+    "401":
+      $ref: ../../../../common/errors/unauthorized.yaml
+
+    "404":
+      $ref: ../../../../common/errors/not-found.yaml
+
+    "409":
+      $ref: ../../../../common/errors/conflict.yaml

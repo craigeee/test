@@ -1,0 +1,9 @@
+HealthCheckOk:
+  type: object
+  properties:
+    uptime:
+      type: number
+    message:
+      type: string
+    timestamp:
+      type: number

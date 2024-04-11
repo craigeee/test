@@ -1,0 +1,16 @@
+get:
+  summary: Checks the liveness of the application
+  description: Returns a simple status object indicating if the application is alive.
+  operationId: getLiveness
+  tags: ["Health"]
+
+  responses:
+    "200":
+      description: Application is alive
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas.yaml#/HealthCheckOk
+
+    "503":
+      $ref: ../errors/service-unavailable.yaml

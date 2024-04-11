@@ -1,0 +1,133 @@
+# Source: https://github.com/cat-home-experts/gcp-jobs-management-api/blob/main/service/Jobs.Api/Validators/JobRequestValidator.cs
+JobData:
+  type: object
+  properties:
+    category:
+      $ref: "#/JobCategory"
+    description:
+      $ref: ./description.yaml
+    trades:
+      type: array
+      items:
+        type: number
+      maxItems: 3
+      minItems: 1
+      description: List of trades to be used for the job creation, instead of them being picked from search API. This should only be used for testing and is only available for users whose account email ends with @checkatrade.com, otherwise 403 is returned.
+    postcode:
+      $ref: ./postcode.yaml
+
+Job:
+  type: object
+  properties:
+    id:
+      $ref: ./id.yaml
+    allOf:
+      $ref: "#/JobData"
+    trades:
+      type: array
+      items:
+        $ref: "#/Trade"
+
+JobCategory:
+  type: object
+  properties:
+    id:
+      type: integer
+      minimum: 1
+    label:
+      type: string
+
+Trade:
+  type: object
+  required:
+    - name
+    - uniqueName
+    - logoUrl
+    - channelId
+    - status
+  properties:
+    name:
+      type: string
+    uniqueName:
+      type: string
+    logoUrl:
+      type: string
+    reviews:
+      type: object
+      description: When fetching reviews from the /trade-profile API, a 404 response may occur if a trade is hidden via the hiddenProfile flag. In these instances, reviews for that trade will not be returned.
+      properties:
+        score:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 10
+          description: Mapped - reviewsSummary.recentMeanScore
+        count:
+          type: integer
+          minimum: 0
+          description: Mapped - reviewsSummary.totalRecentReviews
+    channelId:
+      type: string
+      description: Stream chat channel Id
+    status:
+      $ref: "#/OpportunityStatus"
+
+OpportunityStatus:
+  type: string
+  description: |
+    Can take one of the following values:
+
+    * REQUESTED - initial state when job is offered to trade
+    * REQUEST_ACCEPTED - when trade raise his interest in the job
+    * REQUEST_REJECTED - when trade rejects the job
+    * QUOTED - trade presented an offer
+    * QUOTE_ACCEPTED - consumer accepted the offer
+    * QUOTE_REJECTED - consumer rejected the offer
+    * SCHEDULED - when trade propose a schedule
+    * SCHEDULE_ACCEPTED - when consumer confirms the schedule
+    * SCHEDULE_REJECTED - when consumer asks for a new schedule
+    * COMPLETED - when trade marks the job as done
+    * COMPLETION_ACCEPTED - when consumer accepts performed work
+    * COMPLETION_REJECTED - when consumer rejects performed work
+    * CANCELLED - consumer cancelled the job or accepted offer from other trade
+  enum:
+    - REQUESTED
+    - REQUEST_ACCEPTED
+    - REQUEST_REJECTED
+    - QUOTED
+    - QUOTE_ACCEPTED
+    - QUOTE_REJECTED
+    - SCHEDULED
+    - SCHEDULE_ACCEPTED
+    - SCHEDULE_REJECTED
+    - COMPLETED
+    - COMPLETION_ACCEPTED
+    - COMPLETION_REJECTED
+    - CANCELLED
+
+JobsPaginated:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: "#/Job"
+    currentPage:
+      type: integer
+      description: The current page number in the pagination sequence.
+      minimum: 1
+    pageSize:
+      type: integer
+      description: The number of items per page.
+      minimum: 1
+
+parameters:
+  path:
+    jobId:
+      name: jobId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: The `id` of the job

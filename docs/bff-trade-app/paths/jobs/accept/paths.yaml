@@ -1,0 +1,24 @@
+post:
+  summary: Accept
+  description: Trade raise his interest in the job. Changes job status to REQUEST_ACCEPTED.
+  operationId: postAcceptJob
+  tags: ["Job"]
+  parameters:
+    - $ref: "../../../../common/schemas/job.yaml#/parameters/path/jobId"
+
+  responses:
+    "200":
+      description: Successfully accepted
+      content:
+        application/json:
+          schema:
+            $ref: "../../../common/schemas/job.yaml#/JobData"
+
+    "401":
+      $ref: ../../../../common/errors/unauthorized.yaml
+
+    "403":
+      $ref: ../../../../common/errors/forbidden.yaml
+
+    "409":
+      $ref: ../../../../common/errors/conflict.yaml

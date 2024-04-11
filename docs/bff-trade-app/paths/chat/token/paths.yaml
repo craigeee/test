@@ -1,0 +1,26 @@
+post:
+  summary: Fetch chat configuration
+  description: Returns an Stream API key and access token for the current user
+  operationId: postChatToken
+  tags: ["Chat"]
+
+  responses:
+    "200":
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - accessToken
+            properties:
+              accessToken:
+                type: string
+              apiKey:
+                type: string
+
+    "400":
+      $ref: ../../../../common/errors/bad-request.yaml
+
+    "401":
+      $ref: ../../../../common/errors/unauthorized.yaml

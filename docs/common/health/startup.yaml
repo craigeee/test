@@ -1,0 +1,16 @@
+get:
+  summary: Checks the startup health of the application
+  description: Returns a simple status object indicating the application's startup health.
+  operationId: getStartup
+  tags: ["Health"]
+
+  responses:
+    "200":
+      description: Application has successfully started
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas.yaml#/HealthCheckOk
+
+    "503":
+      $ref: ../errors/service-unavailable.yaml

@@ -1,0 +1,17 @@
+# Source: https://github.com/cat-home-experts/gcp-jobs-management-api/blob/main/service/Jobs.Api/Validators/JobRequestValidator.cs
+JobData:
+  type: object
+  properties:
+    id:
+      $ref: ../../../common/schemas/id.yaml
+    categoryId:
+      $ref: ../../../common/schemas/category-id.yaml
+    description:
+      $ref: ../../../common/schemas/description.yaml
+    postcode:
+      $ref: ../../../common/schemas/postcode.yaml
+    channelId:
+      type: string
+      description: Stream chat channel Id
+    status:
+      $ref: "../../../common/schemas/job.yaml#/OpportunityStatus"
