@@ -13,8 +13,6 @@ info:
 servers:
   - url: https://api.staging.checkatrade.com/v1/consumer-app
     description: Staging
-  - url: https://api.checkatrade.com/v1/consumer-app
-    description: Production
 
 tags:
   - name: Chat
